@@ -1,0 +1,87 @@
+📑 Agenda for Week1 day 03
+
+10-10:30 - Scoping
+10:30-10:50 - breakout
+10:50- 11:00 - break
+11:00- 12:00 - Operators and Conditional statements
+
+Scoping
+-------
+
+visibility or accessibility of the variable in the code.
+
+Types of scope:
+--------------
+
+Global scope → accessible everywhere
+Function scope → accessible only inside a function
+Block scope → accessible only inside the block { }
+
+Operators are special symbols used to perform operations on values (operands).
+
+1) Arithmetic Operators : Used for mathematical calculations
+
++, -,*, /,%
+
+/ -> Quotient
+% -> Reminder
+
+2) Assignment Operators : used to assign values to the variable
+
++=
+-=
+*=
+/=
+%=
+
+3) Comparison Operators : Used to compare values (returns true/false)
+
+>  -> Greater
+<  -> Lesser
+=== -> strict equality //compares both value and data type
+
+
+== -> loose equality //it compares only the value, coerction
+console.log(1=='1') //
+
+4) Logical Operators : Used to combine conditions (returns true/false)
+
+let a = true, b = false;
+
+&&(AND)
+||(OR)
+!(NOT)
+
+5) Unary Operators : works on single operand(single variable)
+
+Pre-increment ->increments first and then assign
+++a
+
+Post-increment-> use first and then increment
+a++
+
+Pre-decrement -> ->decrement first and then assign
+--b
+
+Post decrement -> use first and then decrement
+b--
+
+
+Coditional statements
+---------------------
+
+Conditional statements are used to make decisions in code.
+
+Based on a condition (true/false)
+JavaScript decides which block to execute
+
+types:
+------
+
+1) if
+   if...else  -> used for conditions (>, <, ==, etc.), range and logic.
+   else if   
+
+
+2) Switch     -> used for multiple exact value comparisons or matching.
+ 
