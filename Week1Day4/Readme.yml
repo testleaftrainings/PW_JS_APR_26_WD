@@ -1,0 +1,87 @@
+Agenda for Week1 day 04
+Looping Statements -> 10:00 - 10:30
+Strings -> 10:30 - 11:30
+break + breakout -> 11:30 - 12:00
+
+
+
+Looping statements
+------------------
+
+Looping statements are used to execute a block of code repeatedly based on a condition.
+
+1) For Loop : used when we know the iterations in advance
+
+syntax:
+-------
+
+for (initialization; condition; increment/decrement) { 
+//code to execute 
+}  
+
+    
+2) while Loop : A while loop is used when the number of iterations is unknown, and execution 
+continues as long as the given condition is true
+
+syntax:
+-------
+
+while (condition) {
+  // code to execute
+}
+
+Ex: 
+
+while(hasNextPage){
+await page.locator(`.navgbutton`).click()
+hasNextPage = await page.locator(`.navgbutton`).isEnabled() // Here verification 
+} 
+
+strings : Sequence of characters
+-------
+
+String Literal
+String objects
+
+Methods
+------
+
+Notes :
+------
+
+slice () :It is a JavaScript string/array method used to extract a portion of data without modifying the original value.
+-----
+
+let course = "Playwright"
+
+   Length | Index | Negative Index   
+P - 1        0        -10
+l - 2        1        -9
+a - 3        2        -8
+y - 4        3        -7
+w - 5        4        -6
+r - 6        5        -5
+i - 7        6        -4
+g - 8        7        -3
+h - 9        8        -2
+t -10        9        -1
+
+}
+
+
+slice () and substring ()
+
+| Feature        | `slice()`              | `substring()`   |
+| -------------- | ---------------------- | --------------- |
+| Negative index | Supports               | Not supported   |
+| start > end    | Returns empty string   | Swaps values    |
+| Usage          | String & Array         | Only String     |
+
+
+
+Break out: Activity
+
+Write a JavaScript function named `printOddNumbers` that prints odd numbers between 1 and 25
+
+/Class room acitvity : reverse a string and check for palindrom
+//value = "madam" => example of palindrom =>madam=madam 
