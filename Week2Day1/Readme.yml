@@ -1,0 +1,148 @@
+Agenda for Week2 day 01
+functions and type of functions -> 10:00 - 10:30
+Arrays -> 10:30 - 11:30
+break + breakout -> 11:30 - 12:00
+
+Functions:
+---------
+
+A function in JavaScript is a reusable block of code used to perform a specific task and there by
+
+Avoid code repetition
+Improve readability
+
+syntax:
+-------
+
+function funName(){
+
+}
+funName()
+
+
+types of function:
+------------------
+
+1) Named function/ function declaration
+2) Function expression/Anonymous function
+3) Arrow function
+
+🔥 Final Comparison
+Type	              Hoisting	    Syntax	        Usage
+Named Function	    ✅ Yes	     function name()	Reusable, global logic
+Function Expression	❌ No	     let x = function()	Dynamic assignment
+Arrow Function	     ❌ No	      () => {}	Short, modern, callbacks
+
+1) Named Function (Function Declaration)
+👉 Where you use in automation
+
+Used for reusable actions / utility methods
+
+Example: Reusable step
+function login( username, password) {
+  console.log("Logging in...");
+  // page.fill(), page.click() etc
+}
+await login( "user1", "pass123");
+🧠 When to use
+
+When the function is common, reusable, and used in multiple tests
+
+💡 Real usage
+Login
+Launch app
+Navigation methods
+Common validations
+
+👉 Basically: Framework-level reusable functions
+
+🎯 2) Function Expression
+👉 Where you use in automation
+
+Used when function is:
+
+Assigned dynamically
+Used inside variables/objects
+Example: Store function in variable
+const takeScreenshot = function(page) {
+  console.log("Screenshot captured");
+};
+await takeScreenshot(page);
+🧠 When to use
+
+When function depends on runtime assignment or conditional logic
+
+💡 Real usage
+let action;
+
+if(env === "prod"){
+  action = function(){ console.log("Prod action"); }
+}else{
+  action = function(){ console.log("QA action"); }
+}
+
+👉 Dynamic behavior
+
+🎯 3) Arrow Function (Most Used in Playwright)
+👉 Where you use in automation
+
+Everywhere in Playwright 😄
+
+Example 1: Test blocks
+test("Login Test", async ({ page }) => {
+  console.log("Executing test");
+});
+
+👉 This is arrow function
+
+Arrays
+------
+
+An array in JavaScript is a special type of object used to store multiple values in a single variable.
+Each value (called an element) has an index, starting from 0.
+
+ex:let fruits = ['apple', 'banana', 'cherry'];
+   console.log(fruits[0]); // apple
+
+   {
+   0:apple
+   1: banana
+   2: cherry
+   }
+
+
+   Key Features of JavaScript Arrays
+   ----------------------------------
+
+1) Dynamic in size — you can add or remove elements anytime.
+
+2) Heterogeneous in Nature-Can store different data types together as an single array
+Ex: let mixed = [10, 'apple', true, { name: 'John' }];
+
+3) Zero-based index — first element is at index 0.
+
+4) Internally objects — JS arrays are not fixed memory blocks like in C/C++/Java.
+
+5) Provides built-in methods like push(), pop(),shift(), unshift(), slice(), splice()
+
+
+push() is used add 1 or more elements to the end of the Array.
+pop() is used to remove only one element from the end of an array
+shift() is used to remove only one element from the start of the array
+unshift() is used to add 1 or more elements at the beginning of the Aray
+slice() is used extract a portion of an array without changing the original array.
+splice() is used to add, remove, or replace elements at a specific index in an array.
+
+syntax:
+array.splice(startIndex, deleteCount, item1, item2, ...)
+
+What each parameter means
+startIndex → where to start changing the array
+deleteCount → how many elements to remove
+item1, item2… → elements to add (optional)
+
+classroom activity:
+
+Print only duplicate elements from array
+
+let arr = [1,2,3,2,4,5,1,4,9,7];
