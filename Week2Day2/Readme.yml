@@ -1,0 +1,214 @@
+Agenda for Week2 day 02
+CallBack functions -> 10:00 - 10:30
+breakout -> 10:30 - 10:45
+break -> 10:45 - 10:55
+Introduction to Playwright -> 10:55 - 11:45
+breakout -> 11:45 - 12:00
+
+What is a callback function?
+
+A callback is just a function you give to another function, and you are telling it:
+
+👉 “When you finish your work, call this function back.”
+
+That’s it!
+
+Simple Example (Real Life)
+
+Ordering Pizza
+
+You call a pizza shop and tell them:
+
+“Here is my number.
+When the pizza is ready, call me back.”
+
+You don’t wait on the phone.
+You go do your own work.
+
+Later, the pizza shop finishes making your pizza → they call you back.
+
+That phone call = callback.
+
+💻 Same Logic in JavaScript
+
+function makePizza(callback) {
+
+    console.log("Making pizza...");
+
+    setTimeout(() => {
+        console.log("Pizza ready!");
+        callback(); // calling back
+    }, 2000);
+
+}
+
+makePizza(() => {
+    console.log("Eat the pizza!");
+});
+
+What’s happening?
+
+You give a function → () => { console.log("Eat the pizza!"); }
+
+makePizza() does its work.
+
+When it's finished, it calls your function back.
+
+*** Why do we use callbacks?
+
+Because some tasks take time:
+
+✔ Reading files
+✔ Calling APIs
+✔ Waiting for user input
+✔ Waiting for timers
+
+Instead of blocking everything, JS says:
+
+“Give me a function, I’ll call you back when I’m done.”
+
+***Simple one-line definition
+
+A callback is a function passed to another function so it can run later.
+
+********************************************************************************
+
+How Youtube Search Works (Using Callbacks):
+
+## YOUTUBE CALLBACK EXAMPLE – COMPLETE CODE
+
+javascript
+function playVideo(user, video, onSaveHistory, onShowRecommendations) {
+    console.log(user + " is watching: " + video);
+
+    // Calling callback functions
+    onSaveHistory(user, video);
+    onShowRecommendations(video);
+}
+
+// Callback 1
+function saveHistory(user, video) {
+    console.log("Video saved to history for user:", user);
+}
+
+// Callback 2
+function showRecommendations(video) {
+    console.log("Showing recommended videos related to:", video);
+}
+
+// Function Call
+playVideo("Arun", "JavaScript Basics", saveHistory, showRecommendations);
+
+
+---
+
+## EXPECTED OUTPUT
+
+Arun is watching: JavaScript Basics
+Video saved to history for user: Arun
+Showing recommended videos related to: JavaScript Basics
+
+---
+
+## Explanation :
+
+playVideo() is the main YouTube action.
+saveHistory() and showRecommendations() are callback functions passed as arguments and executed inside playVideo().
+
+---
+
+If you want real-world style (with server delay simulation), here is async version.
+
+---
+
+## YOUTUBE REALISTIC (ASYNC) VERSION
+
+javascript
+function playVideo(user, video, callback) {
+    console.log(user + " clicked play on: " + video);
+
+    // Simulating server delay (like fetching video stream)
+    setTimeout(function () {
+        console.log("Server: Video stream loaded successfully");
+        callback();
+    }, 2000);
+}
+
+function afterVideoStarts() {
+    console.log("Updating UI, tracking analytics, and loading recommendations...");
+}
+
+playVideo("Arun", "JavaScript Basics", afterVideoStarts);
+
+
+---
+
+## OUTPUT (after 2 seconds)
+
+Arun clicked play on: JavaScript Basics
+Server: Video stream loaded successfully
+Updating UI, tracking analytics, and loading recommendations...
+
+---
+
+Summary:
+
+playVideo() = Main YouTube action
+Other features (history, recommendations, analytics) = Callback functions
+Callback means: After this event completes, execute this function.
+
+When callbacks are nested inside callbacks again and again, code becomes difficult to read and maintain.
+
+Simple sentence:
+
+Too many nested callbacks create messy pyramid-shaped code.
+
+How to Overcome Callback Hell?
+
+Modern JavaScript uses:
+
+1. Promises
+2. Async / Await
+Example of Callback Hell
+
+login(function () {
+  getUser(function () {
+    getOrders(function () {
+      makePayment(function () {
+        console.log("Done");
+      });
+    });
+  });
+});
+
+Looks like staircase / pyramid.
+
+
+
+
+Playwright Introduction
+-----------------------
+
+Playwright is a Node.js library for automating web browsers. It provides a high-level 
+API to control browsers like Chromium, Firefox, and WebKit, allowing developers to write
+scripts for testing, web scraping, and automating tasks in a browser environment.
+
+ Playwright supports multiple programming languages, including JavaScript, TypeScript,
+ Python, C#, and Java.
+
+ CDP:
+ ----
+
+ CDP is a low-level protocol used by tools (like Playwright, Puppeteer) to control, inspect, and debug Chromium-based browsers.
+It allows direct access to browser internals like **DOM**, **network**, **console**, etc.
+
+
+
+ Browswer -> Context -> Page
+ ----------------------------
+
+Browser: Actual browser engine (Chromium, Firefox, WebKit)
+
+Context: Isolated environment like an incognito session
+
+Page: A single tab within a context
