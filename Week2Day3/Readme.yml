@@ -1,0 +1,93 @@
+Agenda for Week2 day 03
+Promise, async and await -> 10:00 - 10:30
+Basics of Playwright, Playwright Config file walk through -> 10:30 - 11:30
+break + breakout -> 11:30 - 12:00
+
+Promise
+-------
+
+Promise is a JavaScript object used to handle asynchronous operations (like API calls, 
+file read, timers) and gives a result in the future
+
+//to avoid the callback- callback hell -> Promise 
+
+-> resolve() -> when task succeeds -> fulfilled
+-> reject() -> when task fails -> rejected
+-> pending() -> initial state()
+
+
+.then() and .catch()
+--------------------
+
+-> .then() -> handel succeeds -> reslove
+-> .catch() -> handles error -> reject
+
+
+//syntax 
+
+let promise =new Promise((resolve,reject)=>{
+
+console.log("order food")
+setTimeout(()=>{
+    resolve("food is ready")-> pass
+    reject("no delivery") ->fail
+},6000)
+})
+
+promise.then(result=>console.log(result)).catch(error=>console.log(error))
+
+
+Async-await
+-----------
+
+//2017 ->async/await -> playwright
+//await => promise
+
+ex:
+
+async function data(){
+
+await page.goto("url")
+await page.locator("username").fill("demomanager")
+
+}
+
+`async/await` is a cleaner way to handle Promises in JavaScript.
+
+* `async` keyword defines a function that returns a Promise.
+* `await` pauses execution until the Promise is resolved or rejected.
+
+Example
+await page.goto("https://google.com");
+await page.click("text=Gmail");
+
+Playwright Config File:
+-----------------------
+
+A configuration file (playwright.config.ts) that defines settings for running tests
+such as test directory, timeout, browser options, etc.
+
+It allows you to customize the test environment and behavior.
+
+
+reporter:[['html', { open: 'always' }]],
+
+use:
+
+trace: 'on',
+video: 'on',
+screenshot:'on',
+headless: false,
+
+Projects: 
+
+  {
+    name: 'chrome',
+    use: {
+      channel: 'chrome',
+      viewport: null,
+      launchOptions: {
+        args: ['--start-maximized'],
+      },
+    },
+  },
