@@ -1,0 +1,203 @@
+Agenda for Week2 day 04
+PageFixture, DOM walk through, CSS selector  -> 10:00 - 11:00 AM
+break - 11:00 - 11:10
+Playwright nth method -> 11:10 - 11:40
+breakout -> 11:40 - 12:00
+
+Page Fixture:
+-------------
+
+Built-in object (page) provided by the test runner to interact with a browser page 
+(open URL, click, type, etc.)
+
+No need to create browser/page manually, it is automatically handled by the test runner.
+
+syntax:
+-------
+
+test('title', async ({ page }) => {
+  await page.goto('https://www.google.com/'); // using page fixture
+});
+
+
+Internally(page fixture implementation):
+---------------------------------------
+test('title', async () => {
+const browser = await chromium.launch();
+const context = await browser.newContext();
+const page = await context.newPage();
+await page.goto('https://www.google.com/')
+})
+
+DOM Basics:
+
+DOM (Document Object Model) is a programming interface for HTML and XML documents. 
+It represents the page as a tree of objects, allowing scripts to manipulate the content, 
+structure, and style of a webpage.
+
+structure of DOM:
+----------------- 
+
+Ways to Open DOM:
+-----------------
+
+1. right click on the application and click on inspect
+2. press f12 or fn + f12
+3. press ctrl + shift + i => browser click on 3 idot -> more tools -> developer tools
+
+
+- Document: The root of the DOM tree, representing the entire webpage.
+
+- The entire page is didvided into two main sections:
+  - Head: Contains metadata, links to stylesheets, scripts, etc.
+  - Body: Contains the visible content of the webpage (text, images, links, etc.)
+- Element: Represents an HTML element (e.g., <div>, <p>, <a>, etc.) and can have 
+ attributes and child elements.
+
+
+Playwright Selectors:
+--------------------
+
+Selectors are used to locate and interact with elements on a webpage. Playwright supports
+various types of selectors, including:
+
+CSS Locators
+Xpath
+Playwright built in locators
+
+1. CSS Selectors: Use CSS syntax to select elements based on their classes, IDs, attributes, etc.
+   Example: page.locator('input[name="username"]')
+
+
+Basic Loactor:
+1.id
+2.class
+3.name
+
+
+<input class="inputLogin" type="text" id="username" name="USERNAME" size="50">
+<label for="username">Username</label>
+
+tag name-> input, label
+
+class,type,id,name,size -> attributeName
+
+"inputLogin","text","username","USERNAME" -> attributeValue
+
+black color text-Username -> text
+
+id-unique value
+name - name of the attribute
+class -used for styling/grouping elements
+
+
+CSS : Cascading Style sheets
+
+id attribute
+-------------
+
+1. [id='username']
+2. tagname[attributeName='attributeValue'] -> input[id='username']
+3. #attributeValue -> #username
+
+name attribute:
+---------------
+
+1. [name='USERNAME']
+2. tagname[attributeName='attributeValue'] -> input[name='USERNAME']
+
+class attribute:
+----------------
+
+1. .attributeValue -> .decorativeSubmit
+2. [class='decorativeSubmit']
+3. tagname[attributeName='attributeValue'] -> input[class='decorativeSubmit']
+
+.input r4 wide mb16 mt8 username -> it wll not work
+.input.r4.wide.mb16.mt8.username -> it will work
+
+.nav-input nav-progressive-attribute
+.nav-input.nav-progressive-attribute
+
+text value: link-> a
+text='textvalue' -> `text='CRM/SFA'`
+
+Partial attribute values in CSS selector:
+--------------------------
+
+input[name*="USER"] --> contains
+
+[id^="name"] --> starts with
+
+^-> caret
+
+[id$="name"] --> end with 
+
+Child Selector (>)
+Syntax:
+parent > child
+Meaning:
+
+Select only direct child
+
+Adjacent Sibling Selector (+)
+Syntax:
+element1 + element2
+Meaning:
+
+Select immediate next sibling
+
+Example:
+<label>Username</label>
+<input type="text">
+<input type="password">
+label + input
+
+👉 Selects first input only (immediately after label)
+
+Simple sentence:
+
+“Find input which comes immediately after label”
+
+Combining with attributes (real-time usage)
+<div class="form">
+  <label>Email</label>
+  <input type="text" name="email">
+</div>
+.form > input[name="email"]
+
+
+CSS Locators with multiple matching elements:
+--------------------------------------------
+
+nth () method :
+--------------
+The nth() method in Playwright is used to select a specific element from multiple matched 
+elements using its index. The index starts from 0.
+
+syntax:
+-------
+
+locator.nth(index) -> index starts from 0 (zero-based index)
+
+
+.first() -> 1st match in the DOM
+.last() -> last match in the DOM
+.nth() -> 2nd or 3rd match 
+nth(0) == first()
+index start from 0,1,2,3
+
+ex: 
+await page.locator().first().click() //first match, using either first() or nth(0)
+await page.locator().last().click() //last match last()
+await page.locator().nth(1).click() //second match nth(1)
+
+
+
+classRoom 1:
+load url : https://login.salesforce.com/?locale=in
+username : dilipkumar.rajendran@testleaf.com
+password : TestLeaf@2025
+click on login button
+wait(12000)
+click on applauncher or 9 dot icon
