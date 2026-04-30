@@ -1,0 +1,170 @@
+Agenda for Week3 day 02
+Advanced X-path -> 10:00 - 10:45 AM
+Playwright Locators -> 10:45 - 11:30
+break - 11:30 - 11:40AM
+breakout -> 11:40 - 12:00
+
+> Advancd Relative Xpath/ Xpath Axes:
+-------------------------------------
+XPath allows both forward and reverse navigation in the DOM. Reverse navigation is done
+using axes like parent, ancestor, and preceding.
+
+if the index is beyond 5 matches, we go with Advanced relative xpaths.
+
+> parent to child
+> Grandparent to Grandchild
+> child to parent
+> Grandchild to Grandparent
+> ElderSibling and YoungerSibling
+> YoungerSibling to ElderSibling
+> Eldercousin to Youngercousin
+> Youngercousin to Eldercousin
+
+1) Parent to child
+Syntax:
+( parent realtive xpath)/(tagName of child)
+EX: //form[@id='login']/p
+
+2) Grand Parent to Grand child
+Syntax: 
+GrandParent relative xpath//tagName of grand child
+Ex: (//form[@id='login']//label)
+
+3) Child to parent
+Syntax:
+Child relative xpath/parent::parent tagName
+Ex: //input[@id='username']/parent::p
+
+4) Grand child to Grand Parent
+Syntax:
+GrandChild relative xpath/ancestor::tagName of grand parent
+Ex: //input[@id='password']/ancestor::form
+
+5) Elder Sibling to younger Sibling
+Syntax:
+(Elder sibling relative xpath)/following-sibling::tagName of younger sibling
+Ex: //label[text()='Username']/following-sibling::input 
+
+6) Younger Sibling to Elder Sibling
+Syntax:
+Younger sibling relative xpath/preceding-sibling::tagName of Elder sibling
+Ex: //input[@id='username']/preceding-sibling::label
+
+7) Elder Cousin to Younger Cousin
+Syntax:
+Elder cousing relative xpath/following::tagName of younger Cousin
+Ex: //input[@id='username']/following::label
+
+
+8) Younger Cousin to Elder Cousin
+Syntax:
+Younger cousin xpath/preceding::tagName of Elder cousin
+Ex: //label[text()='Password']/preceding::input
+
+Classroom 1: Write the typescript code to login to Salesforce application using Advanced Xpaths.
+------------
+
+URL : https://login.salesforce.com/
+Username: dilipkumar.rajendran@testleaf.com
+Password: TestLeaf@2025
+
+
+Notes:
+-----
+Use below command to view browser in full screen:
+--------------------------------------------------
+
+{
+      name: 'chromium',
+      use: { browserName:"chromium", 
+        viewport:null, // disable the deafult 1280x720
+        launchOptions:{
+          args:['--start-maximized'],
+        },
+      },
+    }, 
+
+    Firefox :
+    ----------
+
+        name: 'firefox',
+      use: { browserName:"firefox", 
+        viewport:{ width: 1920, height: 1080 }, // disable the deafult 1280x720
+        launchOptions:{
+          args:['--start-maximized'],
+        }
+}
+}
+
+Playwright Locators:
+--------------------
+Playwright locators are built-in methods to find and interact with elements on a webpage. 
+They provide a more efficient and reliable way to locate elements compared to traditional methods 
+like XPaths or CSS selectors.
+
+
+Types of Playwright Locators:
+-----------------------------
+
+1) getByRole(): Uses accessibility roles to locate elements. 
+It is based on the ARIA (Accessible Rich Internet Applications) roles and is useful for finding elements
+that have specific roles, such as buttons, links, or form controls.
+
+Ex: await page.getByRole('button', { name: 'Login' }).click()
+
+2) getByText()
+Based on visible text of the element. 
+
+Ex: await page.getByText('Login').click()
+
+3) getByLabel()
+For input fields with label
+
+Ex: await page.getByLabel('Username').fill('admin')
+
+4)getByPlaceholder()
+For input fields with placeholder attribute
+
+Ex: await page.getByPlaceholder('Enter username').fill('admin')
+
+5) getByAltText()
+For images with alt text(alternate or equivalent text) attribute.
+ It is used to locate images based on their alt text, which is a descriptive text that provides information about the 
+ image for accessibility purposes.
+
+Ex: await page.getByAltText('Company Logo').click()
+
+6)getByTitle()
+For elements with title attribute 
+
+Ex: await page.getByTitle('Submit Button').click()
+
+7) getByTestId()
+For elements with data-testid attribute, commonly used in testing frameworks to uniquely identify elements. more
+reliable than other locators because it is less likely to change during UI updates. 
+
+Ex: await page.getByTestId('login-button').click()
+
+
+Classroom 2: Write the typescript code to automate the below testcase using Playwright locators.
+
+Url: https://parabank.parasoft.com/parabank/index.htm
+click on forgot login info? using getByRole locator
+cick on Parabank logo using getByAltText locator or click on parabank logo using getByTitle locator
+click on locations using getByText locator
+click on search icon in the navigated page using getByrole
+click on search textbox using getByPlaceholder and enter the location name as "chennai"
+
+
+How getByLabel works internally
+
+Playwright doesn’t just match visible text randomly. It follows accessibility rules:
+
+It looks for a <label> element with text "Password"
+Then it checks the for="password" attribute
+It finds the input with id="password"
+It links both → this becomes a label-control relationship
+
+So Playwright understands:
+👉 “Password” label is connected to that input field
+ 
