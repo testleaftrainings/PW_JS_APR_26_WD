@@ -1,0 +1,480 @@
+Agenda for Week3 day 03
+Assertions -> 10:00 - 10:45 AM
+breakout session -> 10:45 - 11:00AM
+break - 11:00 - 11:10AM
+Type Script Fundamentals -> 11:10 - 12:00
+
+
+Assertions:
+-----------
+
+- Assertions are used to verify that the application is working as expected.
+- Playwright provides a set of built-in assertions that can be used to check the state of the application.
+- Assertions can be used to check for the presence of elements, the text content of elements, the value of input fields,
+ and more.
+
+
+types of Assertions:
+
+
+1) Generic Assertions : 
+----------------------
+
+Generic Assertions are used to validate simple values, variables, calculations, API response fields, boolean conditions, etc.
+These are immediate checks (non-retry) and do NOT depend on UI elements.
+
+Use cases:
+---------
+Comparing numbers
+Comparing strings
+Checking boolean results
+Validating object values
+Checking array lengths
+Validating API response data
+
+✅ Common Generic Assertions
+
+1. toBe()
+
+Checks strict equality (number, boolean, etc.)
+
+expect(status).toBe("assigned");
+expect(isLoggedIn).toBe(true);
+
+2. toEqual()
+
+Checks value equality for objects or arrays
+
+expect([1, 2]).toEqual([1, 2]);
+
+3. toBeTruthy()
+
+Passes if the value is any “truthy” value.
+
+expect("hello").toBeTruthy();
+expect(1).toBeTruthy();
+
+4. toBeFalsy()
+
+Passes if the value is “falsy”.
+Falsy values: 0, null, undefined, false, “”
+
+expect("").toBeFalsy();
+expect(0).toBeFalsy();
+
+5. toBeGreaterThan()
+
+Checks if a number is greater than another.
+
+expect(10).toBeGreaterThan(5);
+
+6. toBeLessThan()
+
+Checks if a number is less than another.
+
+expect(3).toBeLessThan(10);
+
+7. toBeGreaterThanOrEqual() / toBeLessThanOrEqual()
+
+Useful for ranges.
+
+8. toContain()
+
+Checks if an array or string contains something.
+
+expect([1,2,3]).toContain(2);
+expect("playwright").toContain("write");
+
+9. toMatch()
+
+Matches a string using a regex pattern.
+
+expect("Welcome123").toMatch(/Welcome/);
+
+10. toBeNull() / toBeDefined() / toBeUndefined()
+
+State checks.
+
+expect(value).toBeNull();
+expect(name).toBeDefined();
+
+
+2. Locator Assertions:
+-----------------------
+
+Locator Assertions are used to validate the state, visibility, text, attributes, and behavior of UI elements in the webpage.
+
+Locator assertions are AUTO-RETRY, meaning Playwright keeps checking the condition until it becomes true or times out.
+This makes them very reliable for dynamic UI.
+
+Use Cases of Locator Assertions 
+-------------------------------
+
+Locator Assertions are used for:
+
+- Checking visibility of elements
+
+- Verifying buttons are enabled/disabled
+
+- Validating text content
+
+- Checking input field values
+
+- Ensuring elements appear/disappear
+
+- Counting number of elements
+
+
+
+Common Locator Assertions
+--------------------------
+
+1. toBeVisible()
+
+Checks that the element is visible on the page.
+
+await expect(locator).toBeVisible();
+
+2. toBeHidden()
+
+Checks that the element is present but not visible.
+
+await expect(locator).toBeHidden();
+
+3. toBeEnabled()
+
+Checks if the element is enabled and interactive.
+
+await expect(button).toBeEnabled();
+
+4. toBeDisabled()
+
+Checks if the element is disabled (cannot be clicked or typed into).
+
+await expect(button).toBeDisabled();
+
+5. toBeEditable()
+
+Checks if an input field is editable by the user.
+
+await expect(input).toBeEditable();
+
+6. toHaveText()
+
+Checks for exact match of text inside an element.
+
+await expect(locator).toHaveText("Login Successful");
+
+7. toContainText()
+
+Checks if the element contains partial text (substring).
+
+await expect(locator).toContainText("Success");
+
+8. toHaveValue()
+
+Checks the value of input elements (textbox, textarea).
+
+await expect(input).toHaveValue("Testleaf");
+
+9. toHaveAttribute()
+
+Checks if an element has a specific attribute.
+
+await expect(link).toHaveAttribute("href", "/dashboard");
+
+10. toHaveCount()
+
+Checks how many elements match the locator.
+
+await expect(locator).toHaveCount(5);
+
+11. toBeChecked() / toBeUnchecked()
+
+Used for checkboxes, radio buttons, switches.
+
+await expect(checkbox).toBeChecked();
+
+
+Examples:
+
+✔ Check if the login button is visible
+✔ Verify the error message contains correct text
+✔ Validate username field is editable
+✔ Ensure product list displays 10 items
+✔ Check the checkbox is selected after clicking it
+
+Locator assertions auto-retry because UI loads dynamically.
+This is why they are more stable in automation.
+
+ Generic Assertions = value checks
+ Locator Assertions = UI element check
+
+
+3. Page Assertion.
+
+Assertions made on the page object , such as URL and title.
+
+toHaveURL(url) - checks if the current page URL matches the expected URL.
+toHaveTitle() - checks if the page title matches the expected title.
+
+4. Snapshot Assertions. --> Visual Regression testing
+Snapshot assertions are used for visual regression testing by comparing the current UI screenshot with a previously saved 
+snapshot to detect visual changes from the UI perspective.
+
+5. API refernce Assertions. --> REST API 
+Assertions used check your API reponses 
+expect(response).toHaveStatus(200) // Checks if the response status code is 200
+
+
+Based on Functionality 
+--------------------
+
+1. Auto retry assertion.
+2. Non-retry assetion.
+
+
+Hard Assertion.--> It will abruptly stop your execution.
+Soft Assertion. --> Informing that the assertion has failed and it will not stop execution it will move to next  part of execution.
+
+default assertion is hard assertion in playwright.
+timeout for hard assertion is 5000ms and for soft assertion is 0ms.
+we can change the default timeout for hard assertion by using below code in config file.
+expect:{    
+timeout:10000
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+timeouts in playwright :
+----------------------
+
+1. test timeout:
+-----------------
+Timeout for a specific test execution.
+
+test.setTimeout(20000)
+
+2. assertion timeout:
+----------------------
+Timeout for assertion of a weblelement.
+
+In config file below timeout :
+expect:{
+timeout:15000
+}
+
+In script : 
+await expect(locator).toHaveText('Submit',{timeout:8000})
+
+3. Action timeout :
+--------------------
+Timeout for each and every action performed like click(), fill()
+
+In config mention under "use" :
+use:{
+actionTimeout:15000
+}
+
+In script : 
+await page.locator("#password").fill("crmsfa",{timeout:2000})
+
+4. GLobal timeout :
+-----------------------
+Implemented when we execute in pipleines.
+
+In config file under "timeout" :
+
+globalTimout : 60*60*1000
+
+
+Classroom 1:
+
+ 📝 Assignment Requirements
+
+Write a Playwright test that performs the following steps:
+
+🔹 Part 1: Navigate to the page
+
+Launch Playwright test.
+
+Navigate to the page:
+https://leafground.com/input.xhtml
+
+🔹 Part 2: Validate a Disabled Textbox
+
+Locate the textbox with placeholder "Disabled".
+
+Assert that it is disabled using:
+await expect(locator).toBeDisabled()
+
+🔹 Part 3: Validate an Enabled Textbox
+
+Locate another textbox (example: the one with placeholder "Type your name").
+
+Assert that it is enabled using:
+await expect(locator).toBeEditable()
+
+Type your name into the textbox.
+
+🔹 Part 4: Soft Assertion Practice
+
+Pick a textbox that is not disabled.
+
+Use:
+await expect.soft(locator).toBeDisabled()
+
+Observe the test result and understand how soft assertions behave.
+
+🔹 Part 5: Fill Data
+
+Choose a textbox (any enabled one).
+
+Clear existing text using .fill()
+
+Enter a new value (Ex: "Playwright Learning")
+ 
+
+ Typescript Basics:
+ ------------------
+
+ Typescript is a superset of JavaScript that adds static typing and other features to enhance code quality and 
+ maintainability. 
+ It compiles down to plain JavaScript, making it compatible with any environment that runs JavaScript.
+
+
+| Feature              | JavaScript (JS)                                       | TypeScript (TS)                                          |
+| -------------------- | ----------------------------------------------------- | -------------------------------------------------------- |
+| **Definition**       | A scripting language used to create dynamic web pages | A superset of JavaScript developed by Microsoft          |
+| **Typing**           | Dynamically typed                                     | Statically typed (supports type checking)                |
+| **Error Detection**  | Errors appear mostly at runtime                       | Errors can be detected during compile time
+| **Compilation**      | Runs directly in browser                              | Must be compiled to JavaScript before running            |
+| **Code Maintenance** | Harder in large projects                              | Easier for large-scale applications                      |           |
+| **Syntax**           | Simpler                                               | Slightly more structured due to types                    |
+
+
+ Installation commands
+ ---------------------
+
+// Install TypeScript globally using npm
+npm install -g typescript 
+
+//to check the version of typescript installed
+tsc -v 
+
+//to install typescript locally in a project
+npm install --save-dev typescript
+
+//to initialize a TypeScript project and create a tsconfig.json file
+tsc --init
+
+//to compile TypeScript files to JavaScript and execute the compiled JavaScript file
+tsc filename.ts   ->compiles filename.ts to filename.js
+node filename.js   -> executes the compiled JavaScript file
+
+//to run your TypeScript file directly without compiling it to JavaScript using ts-node
+npm install -g ts-node
+
+command:
+ts-node filename.ts
+
+
+Type Inference: TypeScript automatically assigns the datatype based on the value given to the variable. 
+---------------
+
+Implicit inference:
+------------------
+
+Implicit type inference means TypeScript automatically understands the data type of a variable based on the value 
+assigned to it.
+
+Ex:
+let city = "Chennai";   // inferred as string
+let count = 100;        // inferred as number
+let isActive = true;    // inferred as boolean
+
+Explicit inference:
+-------------------
+explicit type inference is when you explicitly declare the data type of a variable in TypeScript.
+
+ EX: let name: string = "Gauthami";
+     let Id: number = 2567;
+
+Why We Compile TypeScript?
+Explanation
+
+TypeScript cannot run directly in browser or Node.js.
+
+Reason:
+
+Browsers understand only JavaScript
+Node.js also executes JavaScript
+
+So TypeScript must be converted → JavaScript using compiler (tsc)
+
+Simple Flow
+TypeScript (.ts) → Compile → JavaScript (.js) → Run
+Simple Sentence
+
+TypeScript must be converted to JavaScript before execution.
+
+Datatypes in TypeScript 
+-----------------------
+
+1. number
+2. string
+3. boolean
+4. undefined
+5. null
+6. any 
+7. unknown
+8. never
+9. tuple
+
+number: It is used to represent both integer and floating-point numbers.
+
+string: It is used to represent text data. It can be enclosed in single quotes, double quotes, or backticks.
+
+boolean: It is used to represent logical values, which can be either true or false.
+
+undefined: It is a type that represents the absence of a value. A variable that has been declared but not assigned a 
+value is of type undefined.
+
+null: It is a type that represents the intentional absence of any object value. It is often used to indicate that a 
+variable has no value assigned to it.
+
+any: It is a type that can represent any value. used when are not sure about the datatype.
+
+ex: analyze the data from an API and we are not sure about the datatype of the response.
+let data: any = fetchDataFromAPI();
+expected output: data can be of any type, such as string, number, object, etc.
+
+unknown: It is a type that can represent any value, but it is safer than any because it requires type checking before
+using the value.
+ex: let square:unknown=5
+if(typeof square === number){
+    console.log(square*square);
+}
+expected output: 25
+
+never: It is a type that represents values that never occur. It is used for functions that throw exceptions or have
+infinite loops.
+
+Ex:
+function stopTest(message: string): never {
+  throw new Error(message);
+}
+
+stopTest("Login failed");
+
+
+| Type    | Meaning                                        |
+| ------- | ---------------------------------------------- |
+| `void`  | Function runs and finishes but returns nothing |
+| `never` | Function never finishes                        |
+
+
+tuple: It is a type that represents an array with a fixed number of elements, where each element can have a different type.
+ex: let person: [string, number] = ["Arun", 30];
+console.log(person[0]);//Arun
