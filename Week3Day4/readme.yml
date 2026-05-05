@@ -1,0 +1,111 @@
+Agenda for Week3 day 04
+Type Assertion,object literal -> 10:00 - 10:45 AM
+break -> 10:45 - 10:55AM
+Type Alias -> 10:55 - 11:45
+breakout -> 11:45 - 12:00
+
+
+Typescript function:
+--------------------
+
+function add(a: number, b: number): number {   // function that takes two numbers as parameters and returns a number
+  return a + b;                                //returns the sum of a and b to function
+}
+add(5, 10); // Output: 15
+
+
+Type assertion:
+---------------
+
+Type Assertion in TypeScript is a way to tell the compiler to treat a value as a specific type when the developer knows 
+the type better than the compiler
+
+2 ways to perform type assertion:
+
+1) using angular brackets syntax
+
+let response : any = "Record from server"
+let myResponse = <string> response
+console.log(myResponse.length);
+
+
+2) using as keyword
+
+let sCode : any = "Sucess"
+let statusLength = sCode as string
+console.log(statusLength.length);
+
+object literal in Typescript:
+-----------------------------
+
+In TypeScript, an object literal is a way to define an object with specific properties and their types. It allows you to
+create objects with a defined structure, making it easier to work with complex data.
+
+ex: let user = {
+    username: "admin",
+    password: "admin123"
+};
+
+This is called an object literal. We are creating an object directly with values.
+
+await page.fill("#user", loginData.username);
+await page.fill("#pass", loginData.password);
+
+type alias:
+-----------
+
+A type alias in TypeScript is a way to create a new name for an existing type. It allows you to define a custom type
+that can be used throughout your codebase, making it easier to manage and maintain complex types.
+
+type user ={
+firstname : string
+lastname : string
+mobnumber : number
+}
+let user1 :user ={firstname : 'yuvarani', lastname: 's', mobnumber:987656778}
+types:
+------
+
+1. Union types
+2. Intersection types
+
+Union Types
+-----------
+
+type Id = string | number | boolean | ;
+
+let userId: Id;
+
+userId = "EMP101";   // valid
+userId = 1001;       // valid
+
+Classroom activity on union type :
+ ------------------------------------
+
+- Create a function that accepts only specific payment methods.
+
+- Create a type alias called PaymentMethod that allows only "UPI", "CreditCard", or "PayPal".
+
+- Write a function makePayment that takes a parameter of type PaymentMethod and prints which payment method is chosen.
+
+- Call the function with "UPI" and "CreditCard"as arguments.
+
+Type Intersection
+-----------------
+
+Intersection type combines multiple types into one, meaning the value must satisfy all the types together.
+
+ex:
+type User = { name: string }
+
+type Contact = { phone: number }
+
+type UserContact = User & Contact
+
+let UserContactdetails:UserContact={
+name:"kavitha",
+phone: 735808765
+}
+
+console.log(UserContactdetails.phone)
+
