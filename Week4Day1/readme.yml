@@ -1,0 +1,195 @@
+
+Agenda for Week4 day 01
+Enum -> 10:00 - 10:30 AM
+breakout -> 10:30 - 10:45AM
+break -> 10:45 - 10:55
+Alerts -> 10:55 - 11:45
+breakout -> 11:45 - 12:00
+
+
+Enum/Enumeration
+-----------------
+enum is a feature in TypeScript that allows you to define a set of named constants.
+
+enum types:
+----------
+Numeric enum(default)
+String enum
+Heterogenious enum
+
+Ex:
+enum environment{
+qa
+prod
+}
+
+let env:environment=environment.qa
+console.log(env)
+
+classroom1 on Enum:
+
+1. Create an enum named `Environment` with four values representing different stages of a
+software development process: `LOCAL`, `DEVELOPMENT`, `STAGING`,
+`PRODUCTION`.
+2. Write a function named `runTests` that accepts an argument of type `Environment`. The
+function should print a message indicating the environment against which the tests are
+running.
+3. The function `runTests` should be specified to return `void`, highlighting that it does not
+return any data.
+4. Include example calls to `runTests` using different enum values to demonstrate
+the function's functionality
+
+In TypeScript, numeric enums (like your browserstatus example) are bidirectional by design. This means the enum object acts like a two-way map:
+
+You can access the enum value using the name: browserstatus.open → 0
+You can also access the name using the value: browserstatus[0] → 'open'
+When you console.log(browserstatus), TypeScript's runtime representation shows both directions as properties on the object. 
+This is intentional behavior for numeric enums to make them more flexible for lookups in both directions.
+
+Why does this happen?
+Numeric enums create a bidirectional mapping because the values are numbers, which can serve as both keys and values in the object.
+String enums (like Testresults1) are one-way only, as strings aren't reliable as reverse keys.
+Heterogeneous enums (like Testresults) may have mixed behavior depending on the values.
+
+
+This prevents the reverse mapping. 
+
+Alerts /Dialogs:
+---------------
+
+Definition: Browser pop-ups such as alert, confirm, prompt, or beforeunload triggered by JavaScript.
+
+Usage: Intercept and handle dialog events to read their message and accept or dismiss them.
+
+Syntax:
+
+page.on('dialog', async dialog => { ... }) → Listen and handle.
+
+await dialog.accept([promptText]) → Accept dialog (optionally providing input for prompts).
+
+await dialog.dismiss() → Cancel dialog.
+
+Event Listeners
+--------------
+Definition: You subscribe to an event via Playwright's event emitter system.
+
+Usage: Allows multiple listeners for the same event. No overwriting — all registered callbacks run.
+
+Syntax: page.on(eventName, callback) or page.once(eventName, callback)
+
+
+------------------------------------------------------------------------------------
+
+Event Listeners
+--------------
+An event listener is a function that waits for a specific event (like click, input, alert) and executes code when 
+that event happens.
+
+Syntax: page.on(eventName, callback) or page.once(eventName, callback)
+
+
+✅ What does page.on() mean?
+
+Think of page.on() like:
+
+“Hey Playwright, listen to this page. If something happens, tell me!”
+
+So this part:
+
+page.on(...)
+
+
+means:
+
+👉 Attach a listener to the page for some event.
+
+✅ What is 'dialog'?
+'dialog'
+
+
+This means:
+
+🔔 “I want to be notified whenever an alert box / confirm / prompt appears on this page.”
+
+In browsers, these are called JavaScript dialogs:
+
+alert()
+
+confirm()
+
+prompt()
+
+So:
+
+page.on('dialog', ...)
+
+
+means:
+
+✅ Whenever any alert, confirm, or prompt appears → run this code.
+
+✅ What is async (alert) => { ... }
+
+This is an arrow function (callback function).
+
+It means:
+
+ “When a dialog appears, Playwright will give me that dialog object in the variable called alert.”
+
+So:
+
+async (alert) => {
+
+
+means:
+
+- This function runs automatically
+- alert contains the popup box
+- async is used because:
+
+We use await alert.dismiss() inside it
+
+
+✅ Use page.on() when:
+
+App shows multiple alerts
+
+You want to log all console messages
+
+Handling repeated events
+
+✅ Use page.once() when:
+
+Only one alert is expected
+
+Only one popup or tab
+
+Avoid accidental double handling
+
+⚠️ Common mistake
+
+Using page.on() for a single alert can cause:
+
+Multiple accepts
+
+Test flakiness
+
+Unexpected failures
+
+
+-------------------------------------------------------------------------
+
+classroom Question for alert
+
+Scenario
+User clicks button for prompt → prompt alert appears → user enters text → result is displayed.
+Launch the browser and navigate to the given URL.
+https://the-internet.herokuapp.com/javascript_alerts
+Write code to click on the JS Prompt button.
+Set up dialog handling before clicking the button.
+When the alert appears:
+Capture and print the message
+Enter a name (example: "Playwright")
+Accept the alert with the entered value.
+Verify that the result message on the page contains the entered text:
+Expected: “You entered: Playwright”
