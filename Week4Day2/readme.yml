@@ -1,0 +1,115 @@
+Agenda for Week4 day 02
+Basic understanding of Frames
+Interacting with frames in Playwright -> 10:00 - 11:10 AM
+break -> 11:10 - 11:20 AM
+breakout -> 11:30 - 11:45AM
+storage state -> 11:45 - 12:00
+
+Frames: 
+-------
+
+An HTML document embedded inside another document using an <iframe> tag. Playwright allows direct interaction
+with elements inside frames.
+
+Frame:
+//iframe -> dom (to view frames)
+view Frame source -> right click
+
+ways to handle iFrame:
+------------------------
+
+1) index based - switch to frame with index 
+
+index starts from '0', main page is also considered as a frame at index 0
+ //mP->0 ,f1->1,f2->2,f3->3,f4->4  and so on
+
+ex: 
+const frames = page.frames();
+const frame1=frames[1]
+await frame1.locator("#Click").click()
+
+
+2) FrameLocator - Locate the frame first and then perform the action
+//FrameLocator().locator().click()
+
+ex:
+await page.frameLocator("(//iframe)[1]").locator("#Click").click()
+
+3) FrameObject- get the frame using name, URL, or other properties.
+
+await page.frame({url:await page.frame({url:'https://www.leafground.com/default.xhtml'})?.locator("#Click").click()
+or
+const frame = page.frame({ url: 'https://www.leafground.com/default.xhtml'});
+await frame?.locator("#Click").click()
+
+Optional chaining (?.) allows safe access to properties or methods by returning undefined instead of throwing an error
+when the object is null or undefined.
+
+?. => optional chaining (checks if value exists - not null/undefined)
+   if (frame) {
+      await frame.locator("#Click").click()
+   }
+
+
+Types of Frame
+---------------
+
+1. single Frame
+2. Nested Frame (Frame present inside another frame)
+
+methods()
+---------
+
+page.frames()-> frames() method helps to get the collection of frames that is present in a webpage.
+
+page.frame({ name | url }) → Gets the frame object to interact with webelement.
+
+page.frameLocator(selector) → Locates elements inside a frame (recommended).
+
+
+Classroom 1:
+
+Handle nested frame using frameLocator
+Launch the application URL: https://leafground.com/frame.xhtml
+Locate the outer frame available in the page.
+Switch to the outer frame using frameLocator().
+Locate the inner frame present inside the outer frame.
+Switch to the inner frame.
+Identify the button available inside the inner frame.
+Perform click action on the button.
+
+
+storageState:
+-------------
+
+Storage state is a feature in Playwright that allows you to save the state of the browser,including cookies, local storage,
+and session storage, to a file. This can be useful for maintaining a logged-in state across multiple test runs without 
+having to go through the login process each time.
+
+syntax:
+-------
+
+// Step 1: Login and save state in json format
+await page.context().storageState({ path: 'state.json' })
+
+//Step 2: Reuse state in another test
+test.use({ storageState: 'state.json' })
+
+
+Classroom Task:
+---------------
+
+Use storageState to skip the login and perform actions directly on the application.
+
+Steps:
+
+url: https://login.salesforce.com/
+username : dilipkumar.rajendran@testleaf.com
+password : TestLeaf@2025
+click on login button
+
+Create a new spec file.
+Use the storageState to reuse the logged-in session.
+Navigate to the Home Page URL.
+
+Test 1: Click on Leads.
