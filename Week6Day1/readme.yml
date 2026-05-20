@@ -1,0 +1,133 @@
+📑 Agenda for Week6 Day1 - API with Salesforce.
+
+1) Generate Access Token
+Authenticate user and receive access token.
+
+2) Use Token in Authorization
+Pass token as Bearer token in request header.
+
+3) Create Resource
+Use POST method to create new record.
+
+4) Get Resource
+Use GET method to fetch existing record.
+
+5) Update Resource
+Use PATCH/PUT method to modify record.
+
+6) Delete Resource
+Use DELETE method to remove record.
+
+
+
+1) Steps to get the endpoint for oAuth token/generate access token:
+------------------------------------------------------------------
+
+Google->Salesforce OAuth endpoints->https://hostname/services/oauth2/token
+or 
+https://help.salesforce.com/s/articleView?languempId=en_US&id=xcloud.remoteaccess_oauth_endpoints.htm&type=5
+
+
+endpoint:  https://hostname/services/oauth2/token
+replace the hostname based on the environment  (Production / Developer)
+hostname=login.salesforce.com  
+
+
+2) Steps to get the endpoint from salesforce documentation for CRUD operations:
+
+https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_curl.htm 
+
+or
+
+Google->Salesforce Rest API with cURL->Introduction to Rest API-> Headers->Send Rest request with intro_curl->
+curl https://MyDomainName.my.salesforce.com/services/data/v65.0/sobjects/Lead
+
+replace below domain name in the endpoint
+MyDomainName(https://MyDomainName.my.salesforce.com) = https://orgfarm-6d28dcc693-dev-ed.develop.my.salesforce.com
+
+Final Endpoint= https://orgfarm-6d28dcc693-dev-ed.develop.my.salesforce.com/services/data/v65.0/sobjects/Lead
+
+
+
+--------------------------------------
+Steps to find the field in salesforce :
+----------------------------------------
+
+From Salesforce Setup (Recommended)
+
+Log in to your Salesforce Developer Org.
+
+Go to Setup → Object Manager.
+
+Search for and click on Lead.
+
+Open Fields & Relationships.
+
+You will see a list of all the fields available on the Lead object.
+
+The Field Label is what you see in the UI (e.g., “Last Name”).
+
+The Field Name is what you use in the API (e.g., LastName, Company).
+
+These “Field Names” are what you should use in your JSON request body.
+
+or 
+
+path:
+-----
+https://orgfarm-6d28dcc693-dev-ed.develop.my.salesforce-setup.com/lightning/setup/ObjectManager/Lead/FieldsAndRelationships/view
+
+✅ Example:
+
+{
+
+  "LastName": "VN",
+  "Company": "Testleaf",
+  "Email": "gauthami.vn@testleaf.com",
+  "Phone": "8789765426"
+}
+
+
+Classroom:
+----------
+
+Salesforce API CRUD using Postman -Create Account 
+end point for access token :https://hostname/services/oauth2/token
+end point for CRUD operations: https://MyDomainName.my.salesforce.com/services/data/v65.0/sobjects/Account
+
+
+Different types of variable setting in API testing (Postman):
+------------------------------------------------------------
+
+1) Global Variables
+
+Used across all collections and environments.
+Example: Token, common URL.
+
+let responsebody = pm.response.json();
+let InstUrl = responsebody.instance_url;
+pm.globals.set("Ins_URL", InstUrl);
+
+EX: {{Ins_URL}}
+
+2) Environment Variables
+
+Used for specific environments like Dev, QA, Prod.
+Example: Lead ID, base_url, username.
+
+let LeadResponse = pm.response.json();
+let LDres = LeadResponse.id;
+pm.environment.set("Lead_ID", LDres);
+
+EX: {{Lead_ID}}
+
+3) Collection Variables
+
+Available only inside one collection.
+Used for shared values within that API project.
+
+let responsebody = pm.response.json();
+let AccessToken = responsebody.access_token;
+pm.collectionVariables.set("Acc_Token", AccessToken);
+
+Ex: {{Acc_Token}}
